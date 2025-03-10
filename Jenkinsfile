@@ -61,4 +61,15 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            emailext(
+                to: 'alertas.snort.raulhr@gmail.com',
+                subject: "Pipeline IC: ${currentBuild.fullDisplayName}",
+                body: "${env.BUILD_URL} ha terminado con estado ${currentBuild.result}"
+            )
+        }
+    }
+
+
 }
