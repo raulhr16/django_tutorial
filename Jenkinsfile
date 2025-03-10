@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        IMAGEN = "raulhr16/django"
+        IMAGEN = "raulhr16/django_tutorial"
         USUARIO = 'docker'
     }
     agent none
