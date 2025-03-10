@@ -1,4 +1,4 @@
-#import os
+import os
 """
 Django settings for django_tutorial project.
 
@@ -133,6 +133,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#CSRF_TRUSTED_ORIGINS = ['https://poll.raulhr.site']
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+CSRF_TRUSTED_ORIGINS = ['https://poll.raulhr.site']
