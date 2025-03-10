@@ -40,7 +40,7 @@ pipeline {
                 stage('Build') {
                     steps {
                         script {
-                            newApp = docker.build "$IMAGEN:latest"
+                            newApp = docker.build "$IMAGEN:$BUILD_NUMBER"
                         }
                     }
                 }
@@ -58,6 +58,11 @@ pipeline {
                         sh "docker rmi $IMAGEN:latest"
                         }
                 }
+                stage('Cambiar la version de la imagen') {
+                    steps {
+                        sh "sed -i 's|image: .*|image: ${IMAGEN}:${BUILD_NUMBER}|' docker-compose.yaml"
+                        }
+                }
             }
         }
         stage ('Despliegue') {
@@ -71,7 +76,7 @@ pipeline {
                                 cd django_tutorial &&
                                 git pull &&
                                 docker-compose down &&
-                                docker pull "$IMAGEN:latest" &&
+                                docker pull "$IMAGEN:$BUILD_NUMBER" &&
                                 docker-compose up -d &&
                                 docker image prune -f"
                             """
