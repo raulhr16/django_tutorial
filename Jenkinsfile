@@ -71,7 +71,7 @@ pipeline {
                                 cd django_tutorial &&
                                 git pull &&
                                 docker-compose down &&
-                                docker pull raulhr16/django_tutorial:latest &&
+                                docker pull "$IMAGEN:$BUILD_NUMBER" &&
                                 docker-compose up -d &&
                                 docker image prune -f"
                             """
