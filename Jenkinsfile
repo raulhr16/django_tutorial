@@ -60,6 +60,26 @@ pipeline {
                 }
             }
         }
+        stage ('Despliegue') {
+            agent any
+            stages {
+                stage ('Deploy en el VPS'){
+                    steps{
+                        sshagent(credentials : ['vps']) {
+                            sh """
+                                ssh -o StrictHostKeyChecking=no debian@vps.raulhr.site "
+                                cd django_tutorial &&
+                                git pull &&
+                                docker-compose down &&
+                                docker pull raulhr16/django_tutorial:latest &&
+                                docker-compose up -d &&
+                                docker image prune -f"
+                            """
+                        }
+                    }
+                }
+            }
+        }
     }
     post {
         always {
@@ -70,6 +90,4 @@ pipeline {
             )
         }
     }
-
-
 }
