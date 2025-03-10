@@ -55,7 +55,7 @@ pipeline {
                 }
                 stage('Clean Up') {
                     steps {
-                        sh "docker rmi $IMAGEN:latest"
+                        sh "docker rmi $IMAGEN:$BUILD_NUMBER"
                         }
                 }
                 stage('Cambiar la version de la imagen') {
