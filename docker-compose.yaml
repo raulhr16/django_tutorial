@@ -1,0 +1,31 @@
+services:
+  app:
+    container_name: polls
+    image: raulhr16/django_tutorial
+    restart: always
+    environment:
+      URL_BASE: ${URL_BASE}
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB: ${DB}
+      DJANGO_MAIL: ${DJANGO_MAIL}
+      DJANGO_USER: ${DJANGO_USER}
+      DJANGO_PASS: ${DJANGO_PASS}
+    ports:
+      - "${PUERTO}:8000"
+    depends_on:
+      - db
+  db:
+    container_name: polls_db
+    image: mariadb:${VERSION_MARIADB}
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - polls_data:/var/lib/mysql
+volumes:
+  polls_data:
