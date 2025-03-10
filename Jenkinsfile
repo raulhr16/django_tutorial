@@ -40,7 +40,7 @@ pipeline {
                 stage('Build') {
                     steps {
                         script {
-                            newApp = docker.build "$IMAGEN:$BUILD_NUMBER"
+                            newApp = docker.build "$IMAGEN:latest"
                         }
                     }
                 }
@@ -55,7 +55,7 @@ pipeline {
                 }
                 stage('Clean Up') {
                     steps {
-                        sh "docker rmi $IMAGEN:$BUILD_NUMBER"
+                        sh "docker rmi $IMAGEN:latest"
                         }
                 }
             }
@@ -71,7 +71,7 @@ pipeline {
                                 cd django_tutorial &&
                                 git pull &&
                                 docker-compose down &&
-                                docker pull "$IMAGEN:$BUILD_NUMBER" &&
+                                docker pull "$IMAGEN:latest" &&
                                 docker-compose up -d &&
                                 docker image prune -f"
                             """
