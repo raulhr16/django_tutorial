@@ -70,7 +70,7 @@ pipeline {
                                 ssh -o StrictHostKeyChecking=no debian@vps.raulhr.site "
                                 cd django_tutorial &&
 				git pull &&
-				sed -i 's|image: .*|image: ${IMAGEN}:${BUILD_NUMBER}|' docker-compose.yaml &&
+				sed -i 's|imagen_app= .*|imagen_app=${IMAGEN}:${BUILD_NUMBER}|' .env &&
                                 docker-compose down -v &&
                                 docker pull "$IMAGEN:$BUILD_NUMBER" &&
                                 docker-compose up -d &&
