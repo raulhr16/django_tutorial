@@ -58,11 +58,6 @@ pipeline {
                         sh "docker rmi $IMAGEN:$BUILD_NUMBER"
                         }
                 }
-                stage('Cambiar la version de la imagen') {
-                    steps {
-                        sh "sed -i 's|image: .*|image: ${IMAGEN}:${BUILD_NUMBER}|' docker-compose.yaml"
-                        }
-                }
             }
         }
         stage ('Despliegue') {
@@ -74,8 +69,9 @@ pipeline {
                             sh """
                                 ssh -o StrictHostKeyChecking=no debian@vps.raulhr.site "
                                 cd django_tutorial &&
-                                git pull &&
-                                docker-compose down &&
+				git pull &&
+				sed -i 's|image: .*|image: ${IMAGEN}:${BUILD_NUMBER}|' docker-compose.yaml &&
+                                docker-compose down -v &&
                                 docker pull "$IMAGEN:$BUILD_NUMBER" &&
                                 docker-compose up -d &&
                                 docker image prune -f"
